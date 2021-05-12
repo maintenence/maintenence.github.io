@@ -1,0 +1,143 @@
+<!doctype html>
+<title>Site Maintenance</title>
+<style>
+  body { text-align: center; padding: 150px; }
+  h1 { font-size: 50px; }
+  body { font: 20px Helvetica, sans-serif; color: #333; }
+  article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+  a {  text-decoration: none; }
+  a:hover { color: #333; text-decoration: none; }
+  #player { display:none; }
+  #hacker { display:none; width: 0; margin: 0 auto; color: white;}
+
+  .ring-container {
+    position: relative;
+}
+
+.circle {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 23px;
+    left: 23px;
+}
+
+.ringring {
+    border: 3px solid red;
+    -webkit-border-radius: 30px;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    -webkit-animation: pulsate 2s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    opacity: 0.0
+}
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
+
+</style>
+
+<article>
+    <h1>We'll be back soon!</h1>
+    <div>
+      <p>Sorry for the inconvenience but we're performing some maintenance at the moment.</p>
+      <p>If you'd like, you can <a href="#">watch a live stream of the work!</a> Otherwise we'll be back online shortly.</p>
+  </div>
+</article>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<div id="hacker">
+    <div class="ring-container">
+    <div class="ringring"></div>
+    <div class="circle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LIVE</div>
+
+  <img src="https://media4.giphy.com/media/YQitE4YNQNahy/giphy.gif?cid=ecf05e47lztdqqv7epnv5hcrh81wcc23ipmeqhzp1maq6j8j&rid=giphy.gif&ct=g" />
+</div>
+</div>
+<div id="container">
+<div id="player"></div>
+
+<script id="rendered-js" >
+    var player, iframe;
+    var $ = document.querySelector.bind(document);
+    
+    // init player
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '200',
+        width: '300',
+        videoId: 'dQw4w9WgXcQ',
+        events: {
+          'onReady': onPlayerReady } });
+    
+    
+    }
+    
+    // when ready, wait for clicks
+    function onPlayerReady(event) {
+      var player = event.target;
+      iframe = $('#player');
+      setupListener();
+    }
+    
+    function setupListener() {
+      $('a').addEventListener('click', playFullscreen);
+    }
+    
+    function playFullscreen() {
+        $('#player').style.display='block';
+      player.playVideo(); //won't work on mobile
+    
+      var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
+      if (requestFullScreen) {
+        requestFullScreen.bind(iframe)();
+      }
+    }
+
+
+      
+  document.addEventListener("fullscreenchange", function() {
+    if (!document.fullscreenElement)
+    {
+      player.stopVideo();
+      $('#player').style.display='none';
+      $('#hacker').style.display='block';
+    }
+  }, false);
+
+  document.addEventListener("msfullscreenchange", function() {
+    if (!document.msFullscreenElement)
+    {
+      player.stopVideo();
+      $('#player').style.display='none';
+      $('#hacker').style.display='block';
+    }
+  }, false);
+
+  document.addEventListener("mozfullscreenchange", function() {
+    if (!document.mozFullScreen)
+    {
+      player.stopVideo();
+      $('#player').style.display='none';
+      $('#hacker').style.display='block';
+    }
+  }, false);
+
+  document.addEventListener("webkitfullscreenchange", function() {
+    if (!document.webkitIsFullScreen)
+    {
+      player.stopVideo();
+      $('#player').style.display='none';
+      $('#hacker').style.display='block';
+    }
+  }, false);
+
+        </script>
